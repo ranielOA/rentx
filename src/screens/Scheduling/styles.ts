@@ -45,16 +45,17 @@ export const DateTitle = styled.Text`
   font-size: ${RFValue(10)}px;
 `;
 
-export const DateValue = styled.Text`
+export const DateValue = styled.Text<DateValueProps>`
   color: ${({ theme }) => theme.colors.shape};
   font-family: ${({ theme }) => theme.fonts.primary_500};
   font-size: ${RFValue(15)}px;
+  border-bottom-width: 1px;
+  padding-bottom: 5px;
+  border-bottom-color: transparent;
   ${({ selected, theme }) =>
     !selected &&
     css`
-      border-bottom-width: 1px;
       border-bottom-color: ${theme.colors.text};
-      padding-bottom: 5px;
     `};
 `;
 

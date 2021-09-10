@@ -2,6 +2,10 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 import { useTheme } from 'styled-components';
 
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackList } from '../../routes/routesScreens';
+import { useNavigation } from '@react-navigation/core';
+
 import { BackButton } from '../../components/BackButton';
 import { Button } from '../../components/Button';
 import { Calendar } from '../../components/Calendar';
@@ -20,8 +24,15 @@ import {
   Footer,
 } from './styles';
 
+type rootStackProps = NativeStackNavigationProp<RootStackList, 'Scheduling'>;
+
 export function Scheduling() {
+  const { navigate } = useNavigation<rootStackProps>();
   const theme = useTheme();
+
+  function handleConfirmRental() {
+    navigate('SchedulingDetails');
+  }
 
   return (
     <Container>
@@ -60,7 +71,7 @@ export function Scheduling() {
       </Content>
 
       <Footer>
-        <Button title="Confirmar" />
+        <Button title="Confirmar" onPress={handleConfirmRental} />
       </Footer>
     </Container>
   );

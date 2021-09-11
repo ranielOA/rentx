@@ -4,7 +4,7 @@ import { useTheme } from 'styled-components';
 
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackList } from '../../routes/routesScreens';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation } from '@react-navigation/native';
 
 import { BackButton } from '../../components/BackButton';
 import { Button } from '../../components/Button';

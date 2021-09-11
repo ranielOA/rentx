@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StatusBar } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -21,9 +21,9 @@ export function Home() {
   const [loading, setLoading] = useState(true);
   const { navigate } = useNavigation<rootStackProps>();
 
-  function handleCarDetails() {
-    navigate('CarDetails');
-  }
+  const handleCarDetails = (car: CarDTO) => () => {
+    navigate('CarDetails', { car });
+  };
 
   useEffect(() => {
     async function fetchCars() {
@@ -62,7 +62,7 @@ export function Home() {
           data={cars}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <Car data={item} onPress={handleCarDetails} />
+            <Car data={item} onPress={handleCarDetails(item)} />
           )}
         />
       )}

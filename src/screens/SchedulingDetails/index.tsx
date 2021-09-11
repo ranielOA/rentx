@@ -4,7 +4,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackList } from '../../routes/routesScreens';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation } from '@react-navigation/native';
 
 import { Acessory } from '../../components/Acessory';
 import { BackButton } from '../../components/BackButton';

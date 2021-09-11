@@ -3,7 +3,7 @@ import { StatusBar, useWindowDimensions } from 'react-native';
 
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackList } from '../../routes/routesScreens';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation } from '@react-navigation/native';
 
 import LogoSvg from '../../assets/logo_background_gray.svg';
 import DoneSvg from '../../assets/done.svg';

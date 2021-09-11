@@ -52,17 +52,21 @@ type rootStackProps = NativeStackNavigationProp<
 >;
 
 export function SchedulingDetails() {
-  const { navigate } = useNavigation<rootStackProps>();
+  const { navigate, goBack } = useNavigation<rootStackProps>();
   const theme = useTheme();
 
   function handleConfirmRental() {
     navigate('SchedulingComplete');
   }
 
+  function handleBack() {
+    goBack();
+  }
+
   return (
     <Container>
       <Header>
-        <BackButton onPress={() => {}} />
+        <BackButton onPress={handleBack} />
       </Header>
 
       <CarImages>

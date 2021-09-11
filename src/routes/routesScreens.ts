@@ -1,13 +1,22 @@
 import { CarDTO } from '../dtos/CarDTO';
 
-interface CarDetailsScreenProps {
+export interface CarDetailsScreenProps {
   car: CarDTO;
+}
+
+export interface SchedulingScreenProps {
+  car: CarDTO;
+}
+
+export interface SchedulingDetailsScreenProps {
+  car: CarDTO;
+  dates: string[];
 }
 
 export type RootStackList = {
   Home: undefined;
   CarDetails: CarDetailsScreenProps;
-  Scheduling: undefined;
-  SchedulingDetails: undefined;
+  Scheduling: SchedulingScreenProps;
+  SchedulingDetails: SchedulingDetailsScreenProps;
   SchedulingComplete: undefined;
 };

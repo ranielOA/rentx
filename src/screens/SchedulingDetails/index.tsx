@@ -87,6 +87,11 @@ export function SchedulingDetails() {
       .put(`schedules_bycars/${car.id}`, {
         id: car.id,
         unavailable_dates,
+        startDate: format(getPlatformDate(new Date(dates[0])), 'dd/MM/yyyy'),
+        endDate: format(
+          getPlatformDate(new Date(dates[dates.length - 1])),
+          'dd/MM/yyyy'
+        ),
       })
       .then(() => navigate('SchedulingComplete'))
       .catch(() => Alert.alert('Não foi possível confirmar o agendamento'));

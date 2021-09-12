@@ -3,7 +3,6 @@ import { FlatList, StatusBar } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { BackButton } from '../../components/BackButton';
-import { CarDTO } from '../../dtos/CarDTO';
 import { SchedulesByUserDTO } from '../../dtos/SchedulesDTO';
 import { api } from '../../services/api';
 

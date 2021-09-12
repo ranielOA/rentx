@@ -19,4 +19,5 @@ export type RootStackList = {
   Scheduling: SchedulingScreenProps;
   SchedulingDetails: SchedulingDetailsScreenProps;
   SchedulingComplete: undefined;
+  MyCars: undefined;
 };

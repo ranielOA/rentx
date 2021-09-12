@@ -2,13 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StatusBar } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { useTheme } from 'styled-components';
 
 import Logo from '../../assets/logo.svg';
 import { Car } from '../../components/Car';
 import { Load } from '../../components/Load';
 
-import { Container, Header, TotalCars, HeaderContent, CarList } from './styles';
+import {
+  Container,
+  Header,
+  TotalCars,
+  HeaderContent,
+  CarList,
+  MyCarsButton,
+} from './styles';
 
 import { api } from '../../services/api';
 import { RootStackList } from '../../routes/routesScreens';
@@ -19,11 +28,17 @@ type rootStackProps = NativeStackNavigationProp<RootStackList, 'Home'>;
 export function Home() {
   const [cars, setCars] = useState<CarDTO[]>([]);
   const [loading, setLoading] = useState(true);
+
   const { navigate } = useNavigation<rootStackProps>();
+  const theme = useTheme();
 
   const handleCarDetails = (car: CarDTO) => () => {
     navigate('CarDetails', { car });
   };
+
+  function handleOpenMyCars() {
+    navigate('MyCars');
+  }
 
   useEffect(() => {
     async function fetchCars() {
@@ -66,6 +81,10 @@ export function Home() {
           )}
         />
       )}
+
+      <MyCarsButton onPress={handleOpenMyCars}>
+        <Ionicons name="ios-car-sport" size={32} color={theme.colors.shape} />
+      </MyCarsButton>
     </Container>
   );
 }

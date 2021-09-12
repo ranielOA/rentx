@@ -9,6 +9,7 @@ interface Props extends RectButtonProps {
   color?: string;
   loading?: boolean;
   light?: boolean;
+  enabled?: boolean;
 }
 
 export function Button({

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, StatusBar } from 'react-native';
+import { StatusBar } from 'react-native';
 import { format } from 'date-fns';
 import { useTheme } from 'styled-components';
 import { getPlatformDate } from '../../utils/getPlatformDate';
@@ -58,10 +58,6 @@ export function Scheduling() {
   const { car } = route.params as SchedulingScreenProps;
 
   function handleConfirmRental() {
-    if (!rentalPeriod.startFormatted || !rentalPeriod.endFormatted) {
-      Alert.alert('Selecione o intervalo para alugar');
-      return;
-    }
     navigate('SchedulingDetails', {
       car,
       dates: Object.keys(markedDates),
@@ -138,7 +134,11 @@ export function Scheduling() {
       </Content>
 
       <Footer>
-        <Button title="Confirmar" onPress={handleConfirmRental} />
+        <Button
+          enabled={!!rentalPeriod.endFormatted}
+          title="Confirmar"
+          onPress={handleConfirmRental}
+        />
       </Footer>
     </Container>
   );

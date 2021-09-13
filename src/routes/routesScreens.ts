@@ -13,11 +13,15 @@ export interface SchedulingDetailsScreenProps {
   dates: string[];
 }
 
-export type RootStackList = {
-  Home: undefined;
-  CarDetails: CarDetailsScreenProps;
-  Scheduling: SchedulingScreenProps;
-  SchedulingDetails: SchedulingDetailsScreenProps;
-  SchedulingComplete: undefined;
-  MyCars: undefined;
-};
+declare global {
+  namespace ReactNavigation {
+    interface RootParamList {
+      Home: undefined;
+      CarDetails: CarDetailsScreenProps;
+      Scheduling: SchedulingScreenProps;
+      SchedulingDetails: SchedulingDetailsScreenProps;
+      SchedulingComplete: undefined;
+      MyCars: undefined;
+    }
+  }
+}

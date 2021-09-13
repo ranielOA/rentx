@@ -4,11 +4,7 @@ import { Feather } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { format } from 'date-fns';
 
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import {
-  RootStackList,
-  SchedulingDetailsScreenProps,
-} from '../../routes/routesScreens';
+import { SchedulingDetailsScreenProps } from '../../routes/routesScreens';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { Acessory } from '../../components/Acessory';
@@ -49,11 +45,6 @@ import {
 import { api } from '../../services/api';
 import { SchedulesByCarDTO } from '../../dtos/SchedulesDTO';
 
-type rootStackProps = NativeStackNavigationProp<
-  RootStackList,
-  'SchedulingDetails'
->;
-
 interface RentalPeriod {
   start: string;
   end: string;
@@ -65,7 +56,7 @@ export function SchedulingDetails() {
     {} as RentalPeriod
   );
 
-  const { navigate, goBack } = useNavigation<rootStackProps>();
+  const { navigate, goBack } = useNavigation();
   const route = useRoute();
   const { car, dates } = route.params as SchedulingDetailsScreenProps;
   const theme = useTheme();

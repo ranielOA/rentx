@@ -7,11 +7,7 @@ import { Button } from '../../components/Button';
 import { getAccessoryIcon } from '../../utils/getAccessoryIcon';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import {
-  CarDetailsScreenProps,
-  RootStackList,
-} from '../../routes/routesScreens';
+import { CarDetailsScreenProps } from '../../routes/routesScreens';
 
 import {
   Container,
@@ -30,10 +26,8 @@ import {
   Footer,
 } from './styles';
 
-type rootStackProps = NativeStackNavigationProp<RootStackList, 'CarDetails'>;
-
 export function CarDetails() {
-  const { navigate, goBack } = useNavigation<rootStackProps>();
+  const { navigate, goBack } = useNavigation();
   const route = useRoute();
   const { car } = route.params as CarDetailsScreenProps;
 

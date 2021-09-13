@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StatusBar } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -20,16 +19,13 @@ import {
 } from './styles';
 
 import { api } from '../../services/api';
-import { RootStackList } from '../../routes/routesScreens';
 import { CarDTO } from '../../dtos/CarDTO';
-
-type rootStackProps = NativeStackNavigationProp<RootStackList, 'Home'>;
 
 export function Home() {
   const [cars, setCars] = useState<CarDTO[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const { navigate } = useNavigation<rootStackProps>();
+  const { navigate } = useNavigation();
   const theme = useTheme();
 
   const handleCarDetails = (car: CarDTO) => () => {

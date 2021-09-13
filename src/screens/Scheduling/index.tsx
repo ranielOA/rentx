@@ -4,11 +4,7 @@ import { format } from 'date-fns';
 import { useTheme } from 'styled-components';
 import { getPlatformDate } from '../../utils/getPlatformDate';
 
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import {
-  RootStackList,
-  SchedulingScreenProps,
-} from '../../routes/routesScreens';
+import { SchedulingScreenProps } from '../../routes/routesScreens';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { BackButton } from '../../components/BackButton';
@@ -34,8 +30,6 @@ import {
   Footer,
 } from './styles';
 
-type rootStackProps = NativeStackNavigationProp<RootStackList, 'Scheduling'>;
-
 interface RentalPeriod {
   startFormatted: string;
   endFormatted: string;
@@ -52,7 +46,7 @@ export function Scheduling() {
     {} as RentalPeriod
   );
 
-  const { navigate, goBack } = useNavigation<rootStackProps>();
+  const { navigate, goBack } = useNavigation();
   const theme = useTheme();
   const route = useRoute();
   const { car } = route.params as SchedulingScreenProps;

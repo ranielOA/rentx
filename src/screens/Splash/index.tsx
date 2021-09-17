@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import Animated, {
   Extrapolate,
   interpolate,
+  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
@@ -14,6 +16,8 @@ import { Container } from './styles';
 
 export function Splash() {
   const splashAnimation = useSharedValue(0);
+
+  const { navigate } = useNavigation();
 
   const brandStyle = useAnimatedStyle(() => ({
     opacity: interpolate(splashAnimation.value, [0, 50], [1, 0]),
@@ -43,8 +47,15 @@ export function Splash() {
     ],
   }));
 
+  function startApp() {
+    navigate('Home');
+  }
+
   useEffect(() => {
-    splashAnimation.value = withTiming(50, { duration: 1000 });
+    splashAnimation.value = withTiming(50, { duration: 1000 }, () => {
+      'worklet';
+      runOnJS(startApp)();
+    });
   }, []);
 
   return (

@@ -1,4 +1,13 @@
 import React from 'react';
+import { StatusBar } from 'react-native';
+import Animated, {
+  Extrapolate,
+  interpolate,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+} from 'react-native-reanimated';
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { Acessory } from '../../components/Acessory';
 import { BackButton } from '../../components/BackButton';
 import { ImageSlider } from '../../components/ImageSlider';
@@ -15,7 +24,6 @@ import {
   CarImages,
   Description,
   Rent,
-  Content,
   Details,
   Brand,
   Name,
@@ -31,6 +39,15 @@ export function CarDetails() {
   const route = useRoute();
   const { car } = route.params as CarDetailsScreenProps;
 
+  const scrollY = useSharedValue(0);
+  const scrollHandler = useAnimatedScrollHandler((event) => {
+    scrollY.value = event.contentOffset.y;
+  });
+
+  const headerStyleAnimation = useAnimatedStyle(() => ({
+    height: interpolate(scrollY.value, [0, 200], [200, 70], Extrapolate.CLAMP),
+  }));
+
   function handleConfirmRental() {
     navigate('Scheduling', { car });
   }
@@ -41,15 +58,29 @@ export function CarDetails() {
 
   return (
     <Container>
-      <Header>
-        <BackButton onPress={handleBack} />
-      </Header>
+      <StatusBar
+        barStyle="dark-content"
+        translucent
+        backgroundColor="transparent"
+      />
+      <Animated.View style={[headerStyleAnimation]}>
+        <Header>
+          <BackButton onPress={handleBack} />
+        </Header>
 
-      <CarImages>
-        <ImageSlider imagesUrl={car.photos} />
-      </CarImages>
+        <CarImages>
+          <ImageSlider imagesUrl={car.photos} />
+        </CarImages>
+      </Animated.View>
 
-      <Content>
+      <Animated.ScrollView
+        contentContainerStyle={{
+          paddingHorizontal: 24,
+          paddingTop: getStatusBarHeight(),
+        }}
+        showsVerticalScrollIndicator={false}
+        onScroll={scrollHandler}
+      >
         <Details>
           <Description>
             <Brand>{car.brand}</Brand>
@@ -73,7 +104,7 @@ export function CarDetails() {
         </Accessories>
 
         <About>{car.about}</About>
-      </Content>
+      </Animated.ScrollView>
 
       <Footer>
         <Button

@@ -24,7 +24,7 @@ import {
 
 import { useTheme } from 'styled-components';
 import { Car } from '../../components/Car';
-import { Load } from '../../components/Load';
+import { LoadAnimation } from '../../components/LoadAnimation';
 
 export function MyCars() {
   const [cars, setCars] = useState<SchedulesByUserDTO[]>([]);
@@ -73,7 +73,7 @@ export function MyCars() {
       </Header>
 
       {loading ? (
-        <Load />
+        <LoadAnimation />
       ) : (
         <Content>
           <Appointments>

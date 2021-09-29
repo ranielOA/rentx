@@ -1,9 +1,11 @@
 import styled from 'styled-components/native';
 import { RectButton } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { FlattenSimpleInterpolation } from 'styled-components';
 
 interface ButtonProps {
   color: string;
+  buttonStyle?: FlattenSimpleInterpolation;
 }
 
 interface ButtonTextProps {
@@ -17,6 +19,7 @@ export const Container = styled(RectButton)<ButtonProps>`
   justify-content: center;
   background-color: ${({ color }) => color};
   margin-bottom: 8px;
+  ${({ buttonStyle }) => buttonStyle}
 `;
 
 export const Title = styled.Text<ButtonTextProps>`

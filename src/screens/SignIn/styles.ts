@@ -1,4 +1,4 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { RFValue } from 'react-native-responsive-fontsize';
 
@@ -32,3 +32,7 @@ export const Form = styled.View`
 `;
 
 export const Footer = styled.View``;
+
+export const ButtonStyle = css`
+  margin-bottom: 8px;
+`;

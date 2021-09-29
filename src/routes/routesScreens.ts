@@ -22,6 +22,7 @@ declare global {
       SchedulingDetails: SchedulingDetailsScreenProps;
       SchedulingComplete: undefined;
       MyCars: undefined;
+      SignIn: undefined;
     }
   }
 }

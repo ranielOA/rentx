@@ -4,18 +4,22 @@ import { Feather } from '@expo/vector-icons';
 
 import { useTheme } from 'styled-components';
 
-import { Container } from './styles';
+import { Container, IconContainer, InputText } from './styles';
 
 interface Props extends TextInputProps {
   iconName: React.ComponentProps<typeof Feather>['name'];
 }
 
-export function Input({ iconName }: Props) {
+export function Input({ iconName, ...rest }: Props) {
   const theme = useTheme();
 
   return (
     <Container isFocused>
-      <Feather name={iconName} size={24} color={theme.colors.text_detail} />
+      <IconContainer>
+        <Feather name={iconName} size={24} color={theme.colors.text_detail} />
+      </IconContainer>
+
+      <InputText {...rest} />
     </Container>
   );
 }

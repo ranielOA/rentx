@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -17,9 +17,13 @@ import {
   SubTitle,
   Footer,
   ButtonStyle,
+  Form,
 } from './styles';
 
 export function SignIn() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const theme = useTheme();
 
   function handleSignIn() {}
@@ -44,16 +48,24 @@ export function SignIn() {
             </SubTitle>
           </Header>
 
-          <Input
-            iconName="mail"
-            placeholder="E-mail"
-            keyboardType="email-address"
-            autoCorrect={false}
-            autoCapitalize="none"
-          />
+          <Form>
+            <Input
+              iconName="mail"
+              placeholder="E-mail"
+              keyboardType="email-address"
+              autoCorrect={false}
+              autoCapitalize="none"
+              onChangeText={setEmail}
+              value={email}
+            />
 
-          <PasswordInput iconName="lock" placeholder="Senha" />
-
+            <PasswordInput
+              iconName="lock"
+              placeholder="Senha"
+              onChangeText={setPassword}
+              value={password}
+            />
+          </Form>
           <Footer>
             <Button
               title="Login"

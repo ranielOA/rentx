@@ -24,6 +24,7 @@ declare global {
       MyCars: undefined;
       SignIn: undefined;
       SignUpFirtStep: undefined;
+      SignUpSecondStep: undefined;
     }
   }
 }

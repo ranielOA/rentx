@@ -1,10 +1,12 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 
+import { useTheme } from 'styled-components';
+
 import { BackButton } from '../../../components/BackButton';
 import { Bullet } from '../../../components/Bullet';
-import { Input } from '../../../components/Input';
 import { Button } from '../../../components/Button';
+import { PasswordInput } from '../../../components/PasswordInput';
 
 import {
   Container,
@@ -21,15 +23,13 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 
-export function SignUpFirtStep() {
-  const { goBack, navigate } = useNavigation();
+export function SignUpSecondStep() {
+  const { goBack } = useNavigation();
+
+  const theme = useTheme();
 
   function handleBack() {
     goBack();
-  }
-
-  function handleNextStep() {
-    navigate('SignUpSecondStep');
   }
 
   return (
@@ -51,22 +51,12 @@ export function SignUpFirtStep() {
           </Subtitle>
 
           <Form>
-            <FormTitle>1. Dados</FormTitle>
-
-            <Input iconName="user" placeholder="Nome" />
-            <Input
-              iconName="mail"
-              placeholder="E-mail"
-              keyboardType="email-address"
-            />
-            <Input
-              iconName="credit-card"
-              placeholder="CNH"
-              keyboardType="numeric"
-            />
+            <FormTitle>2. Dados</FormTitle>
+            <PasswordInput iconName="lock" placeholder="Senha" />
+            <PasswordInput iconName="lock" placeholder="Repetir Senha" />
           </Form>
 
-          <Button title="Próximo" onPress={handleNextStep} />
+          <Button title="Cadastrar" color={theme.colors.success} />
         </Container>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

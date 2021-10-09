@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import {
   Alert,
   Keyboard,
@@ -28,6 +29,8 @@ export function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const { navigate } = useNavigation();
+
   const theme = useTheme();
 
   async function handleSignIn() {
@@ -52,7 +55,9 @@ export function SignIn() {
     }
   }
 
-  function handleNewAccount() {}
+  function handleNewAccount() {
+    navigate('SignUpFirtStep');
+  }
 
   return (
     <KeyboardAvoidingView behavior="position" enabled>

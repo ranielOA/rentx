@@ -23,6 +23,7 @@ declare global {
       SchedulingComplete: undefined;
       MyCars: undefined;
       SignIn: undefined;
+      SignUpFirtStep: undefined;
     }
   }
 }

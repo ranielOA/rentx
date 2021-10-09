@@ -13,6 +13,14 @@ export interface SchedulingDetailsScreenProps {
   dates: string[];
 }
 
+export interface SignUpSecondStepScreenProps {
+  user: {
+    name: string;
+    email: string;
+    driverLicense: string;
+  };
+}
+
 declare global {
   namespace ReactNavigation {
     interface RootParamList {
@@ -23,8 +31,8 @@ declare global {
       SchedulingComplete: undefined;
       MyCars: undefined;
       SignIn: undefined;
-      SignUpFirtStep: undefined;
-      SignUpSecondStep: undefined;
+      SignUpFirstStep: undefined;
+      SignUpSecondStep: SignUpSecondStepScreenProps;
     }
   }
 }

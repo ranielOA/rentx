@@ -56,7 +56,7 @@ export function SignIn() {
   }
 
   function handleNewAccount() {
-    navigate('SignUpFirtStep');
+    navigate('SignUpFirstStep');
   }
 
   return (
@@ -95,6 +95,7 @@ export function SignIn() {
               value={password}
             />
           </Form>
+
           <Footer>
             <Button
               title="Login"

@@ -1,5 +1,6 @@
-import React from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { SignUpSecondStepScreenProps } from '../../../routes/routesScreens';
 
 import { useTheme } from 'styled-components';
 
@@ -18,18 +19,34 @@ import {
   Title,
 } from './styles';
 import {
+  Alert,
   Keyboard,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from 'react-native';
 
 export function SignUpSecondStep() {
-  const { goBack } = useNavigation();
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
 
+  const { goBack } = useNavigation();
+  const route = useRoute();
   const theme = useTheme();
+
+  const { user } = route.params as SignUpSecondStepScreenProps;
 
   function handleBack() {
     goBack();
+  }
+
+  function handleRegister() {
+    if (!password || !passwordConfirm) {
+      return Alert.alert('Informe a senha e a confirmação.');
+    }
+
+    if (password != passwordConfirm) {
+      return Alert.alert('As senhas não são iguais.');
+    }
   }
 
   return (
@@ -52,11 +69,25 @@ export function SignUpSecondStep() {
 
           <Form>
             <FormTitle>2. Dados</FormTitle>
-            <PasswordInput iconName="lock" placeholder="Senha" />
-            <PasswordInput iconName="lock" placeholder="Repetir Senha" />
+            <PasswordInput
+              iconName="lock"
+              placeholder="Senha"
+              onChangeText={setPassword}
+              value={password}
+            />
+            <PasswordInput
+              iconName="lock"
+              placeholder="Repetir Senha"
+              onChangeText={setPasswordConfirm}
+              value={passwordConfirm}
+            />
           </Form>
 
-          <Button title="Cadastrar" color={theme.colors.success} />
+          <Button
+            title="Cadastrar"
+            color={theme.colors.success}
+            onPress={handleRegister}
+          />
         </Container>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

@@ -19,7 +19,7 @@ export function StackRoutes() {
         headerShown: false,
       }}
     >
-      {/* <Screen name="Splash" component={Splash} /> */}
+      <Screen name="Splash" component={Splash} />
       <Screen name="SignIn" component={SignIn} />
       <Screen
         name="Home"

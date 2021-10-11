@@ -25,7 +25,18 @@ import {
   Form,
 } from './styles';
 
+import {
+  moderateScale,
+  moderateVerticalScale,
+  scale,
+  verticalScale,
+} from 'react-native-size-matters';
+
 export function SignIn() {
+  // console.log('scale');
+  // console.log(scale(40));
+  // console.log('moderate scale');
+  // console.log(moderateVerticalScale(40));
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 

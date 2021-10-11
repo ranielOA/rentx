@@ -21,18 +21,26 @@ export interface SignUpSecondStepScreenProps {
   };
 }
 
+export interface ConfirmationScreen {
+  title: string;
+  message: string;
+  nextScreenRoute: keyof RootParamListScreens;
+}
+
+export interface RootParamListScreens {
+  Home: undefined;
+  CarDetails: CarDetailsScreenProps;
+  Scheduling: SchedulingScreenProps;
+  SchedulingDetails: SchedulingDetailsScreenProps;
+  Confirmation: ConfirmationScreen;
+  MyCars: undefined;
+  SignIn: undefined;
+  SignUpFirstStep: undefined;
+  SignUpSecondStep: SignUpSecondStepScreenProps;
+}
+
 declare global {
   namespace ReactNavigation {
-    interface RootParamList {
-      Home: undefined;
-      CarDetails: CarDetailsScreenProps;
-      Scheduling: SchedulingScreenProps;
-      SchedulingDetails: SchedulingDetailsScreenProps;
-      SchedulingComplete: undefined;
-      MyCars: undefined;
-      SignIn: undefined;
-      SignUpFirstStep: undefined;
-      SignUpSecondStep: SignUpSecondStepScreenProps;
-    }
+    interface RootParamList extends RootParamListScreens {}
   }
 }

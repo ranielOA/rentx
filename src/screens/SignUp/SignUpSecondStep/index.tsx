@@ -9,6 +9,8 @@ import { Bullet } from '../../../components/Bullet';
 import { Button } from '../../../components/Button';
 import { PasswordInput } from '../../../components/PasswordInput';
 
+import { UserDTO } from '../../../dtos/UserDTO';
+
 import {
   Container,
   Form,
@@ -24,6 +26,7 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from 'react-native';
+import { api } from '../../../services/api';
 
 export function SignUpSecondStep() {
   const [password, setPassword] = useState('');
@@ -39,7 +42,7 @@ export function SignUpSecondStep() {
     goBack();
   }
 
-  function handleRegister() {
+  async function handleRegister() {
     if (!password || !passwordConfirm) {
       return Alert.alert('Informe a senha e a confirmação.');
     }
@@ -48,11 +51,26 @@ export function SignUpSecondStep() {
       return Alert.alert('As senhas não são iguais.');
     }
 
-    navigate('Confirmation', {
-      nextScreenRoute: 'SignIn',
-      title: 'Conta Criada',
-      message: `Agora é só fazer login\ne aproveitar`,
-    });
+    const userPost: UserDTO = {
+      name: user.name,
+      email: user.email,
+      driver_license: user.driverLicense,
+      password,
+    };
+
+    await api
+      .post('/users', userPost)
+      .then(() => {
+        navigate('Confirmation', {
+          nextScreenRoute: 'SignIn',
+          title: 'Conta Criada',
+          message: `Agora é só fazer login\ne aproveitar`,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        Alert.alert('Opa', 'Não foi possível cadastrar');
+      });
   }
 
   return (

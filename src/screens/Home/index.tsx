@@ -20,8 +20,8 @@ import { LoadAnimation } from '../../components/LoadAnimation';
 
 import { Container, Header, TotalCars, HeaderContent, CarList } from './styles';
 
-import { api } from '../../services/api';
 import { CarDTO } from '../../dtos/CarDTO';
+import { getCars } from '../../services/CarService';
 
 export function Home() {
   const [cars, setCars] = useState<CarDTO[]>([]);
@@ -70,9 +70,9 @@ export function Home() {
   useEffect(() => {
     async function fetchCars() {
       try {
-        const response = await api.get('/cars');
+        const cars = await getCars();
 
-        setCars(response.data);
+        setCars(cars);
       } catch (error) {
         console.log(error);
       } finally {

@@ -9,7 +9,7 @@ import { Bullet } from '../../../components/Bullet';
 import { Button } from '../../../components/Button';
 import { PasswordInput } from '../../../components/PasswordInput';
 
-import { UserDTO } from '../../../dtos/UserDTO';
+import { createUser } from '../../../services/UserService';
 
 import {
   Container,
@@ -26,7 +26,6 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from 'react-native';
-import { api } from '../../../services/api';
 
 export function SignUpSecondStep() {
   const [password, setPassword] = useState('');
@@ -51,15 +50,7 @@ export function SignUpSecondStep() {
       return Alert.alert('As senhas não são iguais.');
     }
 
-    const userPost: UserDTO = {
-      name: user.name,
-      email: user.email,
-      driver_license: user.driverLicense,
-      password,
-    };
-
-    await api
-      .post('/users', userPost)
+    await createUser(user.name, user.email, user.driverLicense, password)
       .then(() => {
         navigate('Confirmation', {
           nextScreenRoute: 'SignIn',

@@ -3,8 +3,7 @@ import { FlatList, StatusBar } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { BackButton } from '../../components/BackButton';
-import { SchedulesByUserDTO } from '../../dtos/SchedulesDTO';
-import { api } from '../../services/api';
+import { IGetSchedulesByUserDTO } from '../../dtos/SchedulesDTO';
 
 import {
   Appointments,
@@ -25,9 +24,10 @@ import {
 import { useTheme } from 'styled-components';
 import { Car } from '../../components/Car';
 import { LoadAnimation } from '../../components/LoadAnimation';
+import { getSchedulesByUser } from '../../services/SchedulesService';
 
 export function MyCars() {
-  const [cars, setCars] = useState<SchedulesByUserDTO[]>([]);
+  const [cars, setCars] = useState<IGetSchedulesByUserDTO[]>([]);
   const [loading, setLoading] = useState(true);
 
   const { goBack } = useNavigation();
@@ -36,8 +36,7 @@ export function MyCars() {
   useEffect(() => {
     async function fetchCars() {
       try {
-        const response = await api.get('schedules_byuser?user_id=1');
-        const schedulesByUser: SchedulesByUserDTO[] = response.data;
+        const schedulesByUser = await getSchedulesByUser();
 
         setCars(schedulesByUser);
       } catch (error) {

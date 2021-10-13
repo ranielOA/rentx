@@ -18,6 +18,12 @@ import { getAccessoryIcon } from '../../utils/getAccessoryIcon';
 import { getPlatformDate } from '../../utils/getPlatformDate';
 
 import {
+  addScheduleByCar,
+  addScheduleByUser,
+  getSchedulesByCar,
+} from '../../services/SchedulesService';
+
+import {
   Container,
   Header,
   CarImages,
@@ -42,8 +48,6 @@ import {
   RentalPriceTotal,
   RentalPriceQuota,
 } from './styles';
-import { api } from '../../services/api';
-import { SchedulesByCarDTO } from '../../dtos/SchedulesDTO';
 
 interface RentalPeriod {
   start: string;
@@ -66,27 +70,18 @@ export function SchedulingDetails() {
   async function handleConfirmRental() {
     setLoading(true);
 
-    const response = await api.get(`/schedules_bycars/${car.id}`);
+    const schedulesByCar = await getSchedulesByCar(car.id);
 
-    const schedulesByCar: SchedulesByCarDTO = response.data;
+    await addScheduleByUser(1, car);
 
     const unavailable_dates = [...schedulesByCar.unavailable_dates, ...dates];
 
-    await api.post('schedules_byuser', {
-      user_id: 1,
-      car,
-    });
-
-    api
-      .put(`schedules_bycars/${car.id}`, {
-        id: car.id,
-        unavailable_dates,
-        startDate: format(getPlatformDate(new Date(dates[0])), 'dd/MM/yyyy'),
-        endDate: format(
-          getPlatformDate(new Date(dates[dates.length - 1])),
-          'dd/MM/yyyy'
-        ),
-      })
+    addScheduleByCar(
+      car.id,
+      unavailable_dates,
+      dates[0],
+      dates[dates.length - 1]
+    )
       .then(() =>
         navigate('Confirmation', {
           nextScreenRoute: 'Home',

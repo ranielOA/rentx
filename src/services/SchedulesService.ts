@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import { CarDTO } from '../dtos/CarDTO';
 import {
-  IAddScheduleByCar,
+  IAddScheduleByCarDTO,
   IAddSchedulesByUserDTO,
   IGetSchedulesByCarDTO,
   IGetSchedulesByUserDTO,
@@ -57,7 +57,7 @@ export async function addScheduleByCar(
   endDate: string
 ) {
   try {
-    const scheduleByCar: IAddScheduleByCar = {
+    const scheduleByCar: IAddScheduleByCarDTO = {
       id,
       unavailable_dates,
       startDate: format(getPlatformDate(new Date(startDate)), 'dd/MM/yyyy'),

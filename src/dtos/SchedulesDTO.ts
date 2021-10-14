@@ -18,7 +18,7 @@ export interface IAddSchedulesByUserDTO {
   car: CarDTO;
 }
 
-export interface IAddScheduleByCar {
+export interface IAddScheduleByCarDTO {
   id: string;
   unavailable_dates: string[];
   startDate: string;

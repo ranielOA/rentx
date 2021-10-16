@@ -48,7 +48,7 @@ export function Splash() {
   }));
 
   function startApp() {
-    navigate('Home');
+    navigate('SignIn');
   }
 
   useEffect(() => {

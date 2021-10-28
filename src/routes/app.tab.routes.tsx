@@ -22,7 +22,7 @@ export function AppTabRoutes() {
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: theme.colors.main,
-        tabBarInactiveBackgroundColor: theme.colors.text_detail,
+        tabBarInactiveTintColor: theme.colors.text_detail,
         tabBarShowLabel: false,
         tabBarStyle: {
           paddingVertical: Platform.select({ ios: 20, android: 0 }),

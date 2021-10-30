@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import {
   Alert,
@@ -16,15 +16,7 @@ import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { PasswordInput } from '../../components/PasswordInput';
 
-import {
-  Container,
-  Header,
-  Title,
-  SubTitle,
-  Footer,
-  ButtonStyle,
-  Form,
-} from './styles';
+import { Container, Header, Title, SubTitle, Footer, ButtonStyle, Form } from './styles';
 
 import {
   moderateScale,
@@ -32,6 +24,7 @@ import {
   scale,
   verticalScale,
 } from 'react-native-size-matters';
+import { database } from '../../database';
 
 export function SignIn() {
   // console.log('scale');
@@ -49,9 +42,7 @@ export function SignIn() {
   async function handleSignIn() {
     try {
       const schema = Yup.object().shape({
-        email: Yup.string()
-          .required('E-mail obrigatório')
-          .email('Digite um e-mail válido'),
+        email: Yup.string().required('E-mail obrigatório').email('Digite um e-mail válido'),
         password: Yup.string().required('A senha é obrigatória'),
       });
 
@@ -74,15 +65,21 @@ export function SignIn() {
     navigate('SignUpFirstStep');
   }
 
+  useEffect(() => {
+    async function loadData() {
+      const userCollection = database.get('users');
+      const users = await userCollection.query().fetch();
+      console.log(users);
+    }
+
+    loadData();
+  }, []);
+
   return (
     <KeyboardAvoidingView behavior="position" enabled>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Container>
-          <StatusBar
-            barStyle="dark-content"
-            backgroundColor="transparent"
-            translucent
-          />
+          <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
 
           <Header>
             <Title>Estamos{'\n'}quase lá.</Title>

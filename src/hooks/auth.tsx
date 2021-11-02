@@ -1,13 +1,7 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
+import { User } from '../dtos/UsersDTO';
 import { api } from '../services/api';
-
-interface User {
-  id: string;
-  email: string;
-  name: string;
-  driver_license: string;
-  avatar: string;
-}
+import { getSession } from '../services/UserService';
 
 interface AuthState {
   token: string;
@@ -35,25 +29,16 @@ function AuthProvider({ children }: AuthProviderProps) {
 
   async function signIn({ email, password }: SignInCredentials) {
     try {
-      const response = await api.post('/sessions', {
-        email,
-        password,
-      });
-
-      const { token, user } = response.data;
-
-      api.defaults.headers.authorization = `Bearer ${token}`;
+      const { token, user } = await getSession(email, password);
 
       setData({ token, user });
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={{ user: data.user, signIn }}>{children}</AuthContext.Provider>
   );
 }
 

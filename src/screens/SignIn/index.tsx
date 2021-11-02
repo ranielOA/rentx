@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import {
   Alert,
@@ -24,7 +24,6 @@ import {
   scale,
   verticalScale,
 } from 'react-native-size-matters';
-import { database } from '../../database';
 
 export function SignIn() {
   // console.log('scale');
@@ -64,16 +63,6 @@ export function SignIn() {
   function handleNewAccount() {
     navigate('SignUpFirstStep');
   }
-
-  useEffect(() => {
-    async function loadData() {
-      const userCollection = database.get('users');
-      const users = await userCollection.query().fetch();
-      console.log(users);
-    }
-
-    loadData();
-  }, []);
 
   return (
     <KeyboardAvoidingView behavior="position" enabled>

@@ -6,3 +6,16 @@ export interface ICreateUsersDTO {
   id?: string;
   avatar?: string;
 }
+
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  driver_license: string;
+  avatar: string;
+}
+
+export interface IGetSessionUserDTO {
+  token: string;
+  user: User;
+}

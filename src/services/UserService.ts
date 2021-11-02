@@ -1,4 +1,4 @@
-import { ICreateUsersDTO } from '../dtos/UsersDTO';
+import { ICreateUsersDTO, IGetSessionUserDTO } from '../dtos/UsersDTO';
 import { api } from './api';
 
 export async function createUser(
@@ -18,6 +18,23 @@ export async function createUser(
     await api.post('/users', user);
 
     return;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getSession(email: string, password: string) {
+  try {
+    const response = await api.post<IGetSessionUserDTO>('/sessions', {
+      email,
+      password,
+    });
+
+    const { token } = response.data;
+
+    api.defaults.headers.authorization = `Bearer ${token}`;
+
+    return response.data;
   } catch (error) {
     throw error;
   }

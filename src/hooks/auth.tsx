@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
+import { saveUser } from '../database/dao/UserDAO';
+import { IUser } from '../database/model/User';
 import { User } from '../dtos/UsersDTO';
-import { api } from '../services/api';
 import { getSession } from '../services/UserService';
 
 interface AuthState {
@@ -30,6 +31,17 @@ function AuthProvider({ children }: AuthProviderProps) {
   async function signIn({ email, password }: SignInCredentials) {
     try {
       const { token, user } = await getSession(email, password);
+
+      const userToSave: IUser = {
+        user_id: user.id,
+        name: user.name,
+        email: user.email,
+        driver_license: user.driver_license,
+        avatar: user.avatar,
+        token: token,
+      };
+
+      await saveUser(userToSave);
 
       setData({ token, user });
     } catch (error) {

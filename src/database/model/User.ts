@@ -1,6 +1,15 @@
 import { Model } from '@nozbe/watermelondb';
 import { field } from '@nozbe/watermelondb/decorators';
 
+interface IUser {
+  user_id: string;
+  name: string;
+  email: string;
+  driver_license: string;
+  avatar: string;
+  token: string;
+}
+
 class User extends Model {
   static table = 'users';
 
@@ -23,4 +32,4 @@ class User extends Model {
   token!: string;
 }
 
-export { User };
+export { User, IUser };

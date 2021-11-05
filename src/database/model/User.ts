@@ -1,7 +1,7 @@
 import { Model } from '@nozbe/watermelondb';
 import { field } from '@nozbe/watermelondb/decorators';
 
-interface IUser {
+interface IUserModel {
   user_id: string;
   name: string;
   email: string;
@@ -32,4 +32,4 @@ class User extends Model {
   token!: string;
 }
 
-export { User, IUser };
+export { User, IUserModel };

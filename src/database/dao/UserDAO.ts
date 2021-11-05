@@ -1,11 +1,11 @@
 import { database } from '..';
-import { IUser, User } from '../model/User';
+import { IUserModel, User } from '../model/User';
 
 function getUserCollection() {
   return database.get<User>('users');
 }
 
-async function saveUser(user: IUser) {
+async function saveUser(user: IUserModel) {
   try {
     const userCollection = getUserCollection();
 

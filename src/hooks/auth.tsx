@@ -1,12 +1,16 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { saveUser } from '../database/dao/UserDAO';
-import { IUser } from '../database/model/User';
-import { User } from '../dtos/UsersDTO';
+import { IUserModel } from '../database/model/User';
 import { getSession } from '../services/UserService';
 
-interface AuthState {
+interface User {
+  id: string;
+  user_id: string;
+  email: string;
+  name: string;
+  driver_license: string;
+  avatar: string;
   token: string;
-  user: User;
 }
 
 interface SignInCredentials {
@@ -26,13 +30,13 @@ interface AuthProviderProps {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 function AuthProvider({ children }: AuthProviderProps) {
-  const [data, setData] = useState<AuthState>({} as AuthState);
+  const [data, setData] = useState<User>({} as User);
 
   async function signIn({ email, password }: SignInCredentials) {
     try {
       const { token, user } = await getSession(email, password);
 
-      const userToSave: IUser = {
+      const userToSave: IUserModel = {
         user_id: user.id,
         name: user.name,
         email: user.email,
@@ -43,15 +47,13 @@ function AuthProvider({ children }: AuthProviderProps) {
 
       await saveUser(userToSave);
 
-      setData({ token, user });
+      setData({ ...user, user_id: user.id, token });
     } catch (error) {
       throw error;
     }
   }
 
-  return (
-    <AuthContext.Provider value={{ user: data.user, signIn }}>{children}</AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ user: data, signIn }}>{children}</AuthContext.Provider>;
 }
 
 function useAuth(): AuthContextData {

@@ -7,15 +7,15 @@ export interface ICreateUsersDTO {
   avatar?: string;
 }
 
-export interface User {
+export interface IUserDTO {
   id: string;
-  email: string;
   name: string;
+  email: string;
   driver_license: string;
   avatar: string;
 }
 
 export interface IGetSessionUserDTO {
   token: string;
-  user: User;
+  user: IUserDTO;
 }

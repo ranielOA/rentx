@@ -24,4 +24,16 @@ async function saveUser(user: IUserModel) {
   }
 }
 
-export { saveUser };
+async function getAllUsers() {
+  try {
+    const userCollection = getUserCollection();
+
+    const users = await userCollection.query().fetch();
+
+    return users;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export { saveUser, getAllUsers };

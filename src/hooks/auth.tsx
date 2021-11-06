@@ -1,6 +1,7 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react';
-import { saveUser } from '../database/dao/UserDAO';
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
+import { getAllUsers, saveUser } from '../database/dao/UserDAO';
 import { IUserModel } from '../database/model/User';
+import { api } from '../services/api';
 import { getSession } from '../services/UserService';
 
 interface User {
@@ -52,6 +53,19 @@ function AuthProvider({ children }: AuthProviderProps) {
       throw error;
     }
   }
+
+  useEffect(() => {
+    async function loadUserData() {
+      const users = await getAllUsers();
+
+      if (users.length > 0) {
+        api.defaults.headers.authorization = `Bearer ${users[0].token}`;
+        setData(users[0]);
+      }
+    }
+
+    loadUserData();
+  }, []);
 
   return <AuthContext.Provider value={{ user: data, signIn }}>{children}</AuthContext.Provider>;
 }

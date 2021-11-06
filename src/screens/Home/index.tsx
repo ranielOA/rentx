@@ -23,28 +23,34 @@ export function Home() {
   };
 
   useEffect(() => {
+    let isMounted = true;
+
     async function fetchCars() {
       try {
         const cars = await getCars();
 
-        setCars(cars);
+        if (isMounted) {
+          setCars(cars);
+        }
       } catch (error) {
         console.log(error);
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     }
 
     fetchCars();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (
     <Container>
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor="transparent"
-        translucent
-      />
+      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
       <Header>
         <HeaderContent>
           <Logo width={RFValue(108)} height={RFValue(12)} />
@@ -58,9 +64,7 @@ export function Home() {
         <CarList
           data={cars}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <Car data={item} onPress={handleCarDetails(item)} />
-          )}
+          renderItem={({ item }) => <Car data={item} onPress={handleCarDetails(item)} />}
         />
       )}
     </Container>

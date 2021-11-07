@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
-import { getAllUsers, saveUser } from '../database/dao/UserDAO';
+import { deleteUserById, getAllUsers, saveUser } from '../database/dao/UserDAO';
 import { IUserModel } from '../database/model/User';
 import { api } from '../services/api';
 import { getSession } from '../services/UserService';
@@ -22,6 +22,7 @@ interface SignInCredentials {
 interface AuthContextData {
   user: User;
   signIn: (credentials: SignInCredentials) => Promise<void>;
+  signOut: () => Promise<void>;
 }
 
 interface AuthProviderProps {
@@ -54,6 +55,16 @@ function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
+  async function signOut() {
+    try {
+      await deleteUserById(data.id);
+
+      setData({} as User);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   useEffect(() => {
     async function loadUserData() {
       const users = await getAllUsers();
@@ -67,7 +78,9 @@ function AuthProvider({ children }: AuthProviderProps) {
     loadUserData();
   }, []);
 
-  return <AuthContext.Provider value={{ user: data, signIn }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user: data, signIn, signOut }}>{children}</AuthContext.Provider>
+  );
 }
 
 function useAuth(): AuthContextData {

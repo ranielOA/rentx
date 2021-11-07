@@ -36,4 +36,19 @@ async function getAllUsers() {
   }
 }
 
-export { saveUser, getAllUsers };
+async function deleteUserById(id: string) {
+  try {
+    const userCollection = getUserCollection();
+
+    await database.write(async () => {
+      const userSelected = await userCollection.find(id);
+      await userSelected.destroyPermanently();
+    });
+
+    return;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export { saveUser, getAllUsers, deleteUserById };

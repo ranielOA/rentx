@@ -24,6 +24,27 @@ async function saveUser(user: IUserModel) {
   }
 }
 
+async function updateUser(user: IUserModel) {
+  try {
+    const userCollection = getUserCollection();
+
+    await database.write(async () => {
+      const userSelected = await userCollection.find(user.id!);
+      await userSelected.update((userData) => {
+        for (const key in user) {
+          if (Object.prototype.hasOwnProperty.call(user, key)) {
+            userData[key as keyof IUserModel] = user[key as keyof IUserModel]!;
+          }
+        }
+      });
+    });
+
+    return;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function getAllUsers() {
   try {
     const userCollection = getUserCollection();
@@ -51,4 +72,4 @@ async function deleteUserById(id: string) {
   }
 }
 
-export { saveUser, getAllUsers, deleteUserById };
+export { saveUser, getAllUsers, deleteUserById, updateUser };

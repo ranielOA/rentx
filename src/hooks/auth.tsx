@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
-import { deleteUserById, getAllUsers, saveUser } from '../database/dao/UserDAO';
+import { deleteUserById, getAllUsers, saveUser, updateUser } from '../database/dao/UserDAO';
 import { IUserModel } from '../database/model/User';
 import { api } from '../services/api';
 import { getSession } from '../services/UserService';
@@ -23,6 +23,7 @@ interface AuthContextData {
   user: User;
   signIn: (credentials: SignInCredentials) => Promise<void>;
   signOut: () => Promise<void>;
+  updatedUser: (user: User) => Promise<void>;
 }
 
 interface AuthProviderProps {
@@ -65,6 +66,13 @@ function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
+  async function updatedUser(user: User) {
+    try {
+      await updateUser(user);
+      setData(user);
+    } catch (error) {}
+  }
+
   useEffect(() => {
     async function loadUserData() {
       const users = await getAllUsers();
@@ -79,7 +87,9 @@ function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user: data, signIn, signOut }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user: data, signIn, signOut, updatedUser }}>
+      {children}
+    </AuthContext.Provider>
   );
 }
 

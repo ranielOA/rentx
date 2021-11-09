@@ -2,6 +2,7 @@ import { Model } from '@nozbe/watermelondb';
 import { field } from '@nozbe/watermelondb/decorators';
 
 interface IUserModel {
+  id?: string;
   user_id: string;
   name: string;
   email: string;

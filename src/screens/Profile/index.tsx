@@ -79,8 +79,8 @@ export function Profile() {
         id: user.id,
         user_id: user.user_id,
         email: user.email,
-        driver_license: user.driver_license,
         token: user.token,
+        driver_license: driverLicense,
         name,
         avatar,
       });

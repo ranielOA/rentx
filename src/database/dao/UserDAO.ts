@@ -26,7 +26,6 @@ async function saveUser(user: IUserModel) {
 
 async function updateUser(user: IUserModel) {
   try {
-    console.log(user);
     const userCollection = getUserCollection();
 
     await database.write(async () => {

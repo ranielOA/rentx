@@ -31,9 +31,11 @@ async function updateUser(user: IUserModel) {
     await database.write(async () => {
       const userSelected = await userCollection.find(user.id!);
       await userSelected.update((userData) => {
-        for (const key in user) {
+        let key = '' as keyof IUserModel;
+
+        for (key in user) {
           if (Object.prototype.hasOwnProperty.call(user, key)) {
-            userData[key as keyof IUserModel] = user[key as keyof IUserModel]!;
+            userData[key] = user[key]!;
           }
         }
       });

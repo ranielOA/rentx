@@ -1,6 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import { deleteUserById, getAllUsers, saveUser, updateUser } from '../database/dao/UserDAO';
-import { IUserModel } from '../database/model/User';
 import { api } from '../services/api';
 import { getSession } from '../services/UserService';
 
@@ -39,16 +38,14 @@ function AuthProvider({ children }: AuthProviderProps) {
     try {
       const { token, user } = await getSession(email, password);
 
-      const userToSave: IUserModel = {
+      await saveUser({
         user_id: user.id,
         name: user.name,
         email: user.email,
         driver_license: user.driver_license,
         avatar: user.avatar,
         token: token,
-      };
-
-      await saveUser(userToSave);
+      });
 
       setData({ ...user, user_id: user.id, token });
     } catch (error) {

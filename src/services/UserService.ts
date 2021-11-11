@@ -39,3 +39,13 @@ export async function getSession(email: string, password: string) {
     throw error;
   }
 }
+
+export async function sendUsersSync(users: any) {
+  try {
+    await api.post('/users/sync', users);
+
+    return;
+  } catch (error) {
+    throw error;
+  }
+}

@@ -17,3 +17,8 @@ export interface CarDTO {
     photo: string;
   }[];
 }
+
+export interface IGetCarsSyncDTO {
+  changes: [created: Object[], updated: Object[], deleted: []];
+  latestVersion: number;
+}

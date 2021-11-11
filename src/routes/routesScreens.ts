@@ -1,3 +1,4 @@
+import { ICarModel } from '../database/model/Car';
 import { CarDTO } from '../dtos/CarDTO';
 
 export interface CarDetailsScreenProps {
@@ -5,11 +6,11 @@ export interface CarDetailsScreenProps {
 }
 
 export interface SchedulingScreenProps {
-  car: CarDTO;
+  car: ICarModel;
 }
 
 export interface SchedulingDetailsScreenProps {
-  car: CarDTO;
+  car: ICarModel;
   dates: string[];
 }
 

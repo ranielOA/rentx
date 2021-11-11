@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { CarDTO } from '../dtos/CarDTO';
+import { ICarModel } from '../database/model/Car';
 import {
   IAddScheduleByCarDTO,
   IAddSchedulesByUserDTO,
@@ -21,9 +21,7 @@ export async function getSchedulesByUser(): Promise<IGetSchedulesByUserDTO[]> {
   }
 }
 
-export async function getSchedulesByCar(
-  id: string
-): Promise<IGetSchedulesByCarDTO> {
+export async function getSchedulesByCar(id: string): Promise<IGetSchedulesByCarDTO> {
   try {
     const response = await api.get(`/schedules_bycars/${id}`);
 
@@ -35,7 +33,7 @@ export async function getSchedulesByCar(
   }
 }
 
-export async function addScheduleByUser(user_id: number, car: CarDTO) {
+export async function addScheduleByUser(user_id: number, car: ICarModel) {
   try {
     const scheduleByCar: IAddSchedulesByUserDTO = {
       user_id,

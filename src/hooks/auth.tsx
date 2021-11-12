@@ -36,7 +36,9 @@ function AuthProvider({ children }: AuthProviderProps) {
 
   async function signIn({ email, password }: SignInCredentials) {
     try {
+      console.log('signin');
       const { token, user } = await getSession(email, password);
+      console.log(user);
 
       await saveUser({
         user_id: user.id,
@@ -49,6 +51,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 
       setData({ ...user, user_id: user.id, token });
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -67,16 +70,22 @@ function AuthProvider({ children }: AuthProviderProps) {
     try {
       await updateUser(user);
       setData(user);
-    } catch (error) {}
+    } catch (error) {
+      throw error;
+    }
   }
 
   useEffect(() => {
     async function loadUserData() {
-      const users = await getAllUsers();
+      try {
+        const users = await getAllUsers();
 
-      if (users.length > 0) {
-        api.defaults.headers.authorization = `Bearer ${users[0].token}`;
-        setData(users[0]);
+        if (users.length > 0) {
+          api.defaults.headers.authorization = `Bearer ${users[0].token}`;
+          setData(users[0]);
+        }
+      } catch (error) {
+        throw error;
       }
     }
 

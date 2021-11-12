@@ -13,7 +13,6 @@ import { Container, Header, TotalCars, HeaderContent, CarList } from './styles';
 
 import { getCarsSync } from '../../services/CarService';
 import { database } from '../../database';
-import { Button } from '../../components/Button';
 import { sendUsersSync } from '../../services/UserService';
 import { getAllCars } from '../../database/dao/CarDAO';
 import { ICarModel } from '../../database/model/Car';
@@ -31,23 +30,28 @@ export function Home() {
   };
 
   async function offlineSynchronize() {
-    await synchronize({
-      database,
-      pullChanges: async ({ lastPulledAt }) => {
-        const { changes, latestVersion } = await getCarsSync(lastPulledAt);
+    try {
+      await synchronize({
+        database,
+        pullChanges: async ({ lastPulledAt }) => {
+          const { changes, latestVersion } = await getCarsSync(lastPulledAt);
 
-        // console.log('BACKEND PARA O APP');
-        // console.log(JSON.stringify(changes));
+          console.log('BACKEND PARA O APP');
+          console.log(JSON.stringify(changes));
 
-        return { changes, timestamp: latestVersion };
-      },
-      pushChanges: async ({ changes }) => {
-        // console.log('APP PARA O BACKEND');
-        // console.log(JSON.stringify(changes));
-        const user = changes.users;
-        await sendUsersSync(user);
-      },
-    });
+          return { changes, timestamp: latestVersion };
+        },
+        pushChanges: async ({ changes }) => {
+          console.log('APP PARA O BACKEND');
+          console.log(JSON.stringify(changes));
+          const user = changes.users;
+          await sendUsersSync(user);
+        },
+        sendCreatedAsUpdated: true,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   useEffect(() => {
@@ -76,11 +80,11 @@ export function Home() {
     };
   }, []);
 
-  // useEffect(() => {
-  //   if(netInfo.isConnected === true){
-  //     offlineSynchronize();
-  //   }
-  // },[netInfo.isConnected])
+  useEffect(() => {
+    if (netInfo.isConnected === true) {
+      offlineSynchronize();
+    }
+  }, [netInfo.isConnected]);
 
   return (
     <Container>
@@ -91,8 +95,6 @@ export function Home() {
           {!loading && <TotalCars>Total de {cars.length} carros</TotalCars>}
         </HeaderContent>
       </Header>
-
-      <Button title="Sincronizar" onPress={offlineSynchronize} />
 
       {loading ? (
         <LoadAnimation />

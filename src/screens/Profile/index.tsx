@@ -6,6 +6,7 @@ import { BackButton } from '../../components/BackButton';
 import { Input } from '../../components/Input';
 import { PasswordInput } from '../../components/PasswordInput';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { Button } from '../../components/Button';
 import * as Yup from 'yup';
 
 import { useAuth } from '../../hooks/auth';
@@ -27,7 +28,6 @@ import {
   PhotoContainer,
   Section,
 } from './styles';
-import { Button } from '../../components/Button';
 
 export function Profile() {
   const { user, signOut, updatedUser } = useAuth();
@@ -91,6 +91,7 @@ export function Profile() {
         Alert.alert('Opa', error.message);
       } else {
         Alert.alert('Não foi possível atualizar o perfil');
+        console.log(error);
       }
     }
   }
@@ -106,80 +107,85 @@ export function Profile() {
         },
         {
           text: 'Sair',
-          onPress: () => signOut(),
+          onPress: async () => {
+            try {
+              await signOut();
+            } catch (error) {
+              console.log(error);
+            }
+          },
         },
       ]
     );
   }
 
   return (
-    <KeyboardAvoidingView behavior="position" enabled>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <Container>
-          <Header>
-            <HeaderTop>
-              <BackButton color={theme.colors.shape} onPress={handleBack} />
+    // <KeyboardAvoidingView behavior="position" enabled>
+    //   <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <Container keyboardShouldPersistTaps="always">
+      <Header>
+        <HeaderTop>
+          <BackButton color={theme.colors.shape} onPress={handleBack} />
 
-              <HeaderTitle>Editar Perfil</HeaderTitle>
+          <HeaderTitle>Editar Perfil</HeaderTitle>
 
-              <LogoutButton onPress={handleSignOut}>
-                <Feather name="power" size={24} color={theme.colors.shape} />
-              </LogoutButton>
-            </HeaderTop>
+          <LogoutButton onPress={handleSignOut}>
+            <Feather name="power" size={24} color={theme.colors.shape} />
+          </LogoutButton>
+        </HeaderTop>
 
-            <PhotoContainer>
-              {!!avatar && <Photo source={{ uri: avatar }} />}
+        <PhotoContainer>
+          {!!avatar && <Photo source={{ uri: avatar }} />}
 
-              <PhotoButton onPress={handleAvatarSelect}>
-                <Feather name="camera" size={24} color={theme.colors.shape} />
-              </PhotoButton>
-            </PhotoContainer>
-          </Header>
+          <PhotoButton onPress={handleAvatarSelect}>
+            <Feather name="camera" size={24} color={theme.colors.shape} />
+          </PhotoButton>
+        </PhotoContainer>
+      </Header>
 
-          <Content style={{ marginBottom: useBottomTabBarHeight() }}>
-            <Options>
-              <Option active={option === 'dataEdit'} onPress={handleOptionChange('dataEdit')}>
-                <OptionTitle active={option === 'dataEdit'}>Dados</OptionTitle>
-              </Option>
+      <Content
+      // style={{ marginBottom: useBottomTabBarHeight() }}
+      >
+        <Options>
+          <Option active={option === 'dataEdit'} onPress={handleOptionChange('dataEdit')}>
+            <OptionTitle active={option === 'dataEdit'}>Dados</OptionTitle>
+          </Option>
 
-              <Option
-                active={option === 'passwordEdit'}
-                onPress={handleOptionChange('passwordEdit')}
-              >
-                <OptionTitle active={option === 'passwordEdit'}>Trocar senha</OptionTitle>
-              </Option>
-            </Options>
+          <Option active={option === 'passwordEdit'} onPress={handleOptionChange('passwordEdit')}>
+            <OptionTitle active={option === 'passwordEdit'}>Trocar senha</OptionTitle>
+          </Option>
+        </Options>
 
-            {option === 'dataEdit' ? (
-              <Section>
-                <Input
-                  iconName="user"
-                  placeholder="Nome"
-                  autoCorrect={false}
-                  defaultValue={user.name}
-                  onChangeText={setName}
-                />
-                <Input iconName="mail" editable={false} defaultValue={user.email} />
-                <Input
-                  iconName="credit-card"
-                  placeholder="CNH"
-                  keyboardType="numeric"
-                  defaultValue={user.driver_license}
-                  onChangeText={setDriverLicense}
-                />
-              </Section>
-            ) : (
-              <Section>
-                <PasswordInput iconName="lock" placeholder="Senha atual" />
-                <PasswordInput iconName="lock" placeholder="Nova senha" />
-                <PasswordInput iconName="lock" placeholder="Repetir senha" />
-              </Section>
-            )}
+        {option === 'dataEdit' ? (
+          <Section>
+            <Input
+              iconName="user"
+              placeholder="Nome"
+              autoCorrect={false}
+              defaultValue={user.name}
+              onChangeText={setName}
+            />
+            <Input iconName="mail" editable={false} defaultValue={user.email} />
+            <Input
+              iconName="credit-card"
+              placeholder="CNH"
+              keyboardType="numeric"
+              defaultValue={user.driver_license}
+              onChangeText={setDriverLicense}
+            />
+          </Section>
+        ) : (
+          <Section>
+            <PasswordInput iconName="lock" placeholder="Senha atual" />
+            <PasswordInput iconName="lock" placeholder="Nova senha" />
+            <PasswordInput iconName="lock" placeholder="Repetir senha" />
+          </Section>
+        )}
 
-            <Button title="Salvar alterações" onPress={handleProfileUpdate} />
-          </Content>
-        </Container>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+        <Button title="Salvar alterações" onPress={handleProfileUpdate} />
+      </Content>
+    </Container>
+    //   </TouchableWithoutFeedback>
+    // </KeyboardAvoidingView>
   );
 }

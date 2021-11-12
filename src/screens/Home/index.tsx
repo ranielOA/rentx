@@ -36,17 +36,21 @@ export function Home() {
         pullChanges: async ({ lastPulledAt }) => {
           const { changes, latestVersion } = await getCarsSync(lastPulledAt);
 
-          console.log('BACKEND PARA O APP');
-          console.log(JSON.stringify(changes));
-          console.log(latestVersion);
+          // console.log('BACKEND PARA O APP');
+          // console.log(JSON.stringify(changes));
+          // console.log(latestVersion);
 
           return { changes, timestamp: latestVersion };
         },
         pushChanges: async ({ changes }) => {
-          console.log('APP PARA O BACKEND');
-          console.log(JSON.stringify(changes));
+          // console.log('APP PARA O BACKEND');
+          // console.log(JSON.stringify(changes));
+
           const user = changes.users;
-          await sendUsersSync(user);
+
+          if (user.updated.length > 0) {
+            await sendUsersSync(user);
+          }
         },
       });
     } catch (error) {

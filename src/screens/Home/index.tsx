@@ -38,6 +38,7 @@ export function Home() {
 
           console.log('BACKEND PARA O APP');
           console.log(JSON.stringify(changes));
+          console.log(latestVersion);
 
           return { changes, timestamp: latestVersion };
         },
@@ -47,7 +48,6 @@ export function Home() {
           const user = changes.users;
           await sendUsersSync(user);
         },
-        sendCreatedAsUpdated: true,
       });
     } catch (error) {
       console.log(error);
@@ -60,6 +60,8 @@ export function Home() {
     async function fetchCars() {
       try {
         const cars = await getAllCars();
+
+        // console.log(cars);
 
         if (isMounted) {
           setCars(cars);

@@ -67,11 +67,7 @@ export function CarDetails() {
 
   return (
     <Container>
-      <StatusBar
-        barStyle="dark-content"
-        translucent
-        backgroundColor="transparent"
-      />
+      <StatusBar barStyle="dark-content" translucent backgroundColor="transparent" />
       <Animated.View
         style={[
           headerStyleAnimation,
@@ -112,7 +108,7 @@ export function CarDetails() {
         </Details>
 
         <Accessories>
-          {car.accessories.map((accessory) => (
+          {car.accessories?.map((accessory) => (
             <Acessory
               key={accessory.type}
               name={accessory.name}
@@ -132,10 +128,7 @@ export function CarDetails() {
       </Animated.ScrollView>
 
       <Footer>
-        <Button
-          title="Escolher período do aluguel"
-          onPress={handleConfirmRental}
-        />
+        <Button title="Escolher período do aluguel" onPress={handleConfirmRental} />
       </Footer>
     </Container>
   );

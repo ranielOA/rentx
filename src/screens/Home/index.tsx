@@ -16,7 +16,6 @@ import { database } from '../../database';
 import { sendUsersSync } from '../../services/UserService';
 import { getAllCars } from '../../database/dao/CarDAO';
 import { ICarModel } from '../../database/model/Car';
-import { CarDTO } from '../../dtos/CarDTO';
 
 export function Home() {
   const [cars, setCars] = useState<ICarModel[]>([]);
@@ -25,7 +24,7 @@ export function Home() {
   const netInfo = useNetInfo();
   const { navigate } = useNavigation();
 
-  const handleCarDetails = (car: CarDTO) => () => {
+  const handleCarDetails = (car: ICarModel) => () => {
     navigate('CarDetails', { car });
   };
 

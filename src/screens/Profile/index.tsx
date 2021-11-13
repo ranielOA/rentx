@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
+import { useNetInfo } from '@react-native-community/netinfo';
 import * as ImagePicker from 'expo-image-picker';
 import { Feather } from '@expo/vector-icons';
 import { BackButton } from '../../components/BackButton';
@@ -37,6 +38,7 @@ export function Profile() {
   const [name, setName] = useState(user.name);
   const [driverLicense, setDriverLicense] = useState(user.driver_license);
 
+  const netInfo = useNetInfo();
   const theme = useTheme();
   const { goBack } = useNavigation();
 
@@ -45,7 +47,11 @@ export function Profile() {
   }
 
   const handleOptionChange = (optionSelected: 'dataEdit' | 'passwordEdit') => () => {
-    setOption(optionSelected);
+    if (netInfo.isConnected === false && optionSelected === 'passwordEdit') {
+      Alert.alert('Você está offline', 'Para mudar a senha, conecte-se a Internet');
+    } else {
+      setOption(optionSelected);
+    }
   };
 
   async function handleAvatarSelect() {

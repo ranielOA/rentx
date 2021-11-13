@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
 import { ICarModel } from '../database/model/Car';
+import { CarDTO } from '../dtos/CarDTO';
 import {
   IAddScheduleByCarDTO,
   IAddSchedulesByUserDTO,
@@ -33,14 +34,23 @@ export async function getSchedulesByCar(id: string): Promise<IGetSchedulesByCarD
   }
 }
 
-export async function addScheduleByUser(user_id: number, car: ICarModel) {
+export async function addScheduleByUser(
+  user_id: number,
+  car_id: string,
+  start_date: Date,
+  end_date: Date,
+  total: number
+) {
   try {
     const scheduleByCar: IAddSchedulesByUserDTO = {
       user_id,
-      car,
+      car_id,
+      start_date,
+      end_date,
+      total,
     };
 
-    await api.post('schedules_byuser', scheduleByCar);
+    await api.post('rentals', scheduleByCar);
 
     return;
   } catch (error) {

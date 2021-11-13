@@ -15,7 +15,10 @@ export interface IGetSchedulesByUserDTO {
 
 export interface IAddSchedulesByUserDTO {
   user_id: number;
-  car: CarDTO;
+  car_id: string;
+  start_date: Date;
+  end_date: Date;
+  total: number;
 }
 
 export interface IAddScheduleByCarDTO {

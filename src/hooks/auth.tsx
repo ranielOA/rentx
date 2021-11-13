@@ -40,8 +40,6 @@ function AuthProvider({ children }: AuthProviderProps) {
     try {
       const { token, user } = await getSession(email, password);
 
-      console.log(user);
-
       await saveUser({
         user_id: user.id,
         name: user.name,
@@ -53,7 +51,6 @@ function AuthProvider({ children }: AuthProviderProps) {
 
       setData({ ...user, user_id: user.id, token });
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }

@@ -2,7 +2,7 @@ import { ICarModel } from '../database/model/Car';
 import { CarDTO } from '../dtos/CarDTO';
 
 export interface CarDetailsScreenProps {
-  car: CarDTO;
+  car: ICarModel;
 }
 
 export interface SchedulingScreenProps {

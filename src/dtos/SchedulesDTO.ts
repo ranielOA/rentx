@@ -6,10 +6,9 @@ export interface IGetSchedulesByCarDTO {
 }
 
 export interface IGetSchedulesByUserDTO {
-  user_id: number;
   car: CarDTO;
-  startDate: string;
-  endDate: string;
+  start_date: string;
+  end_date: string;
   id: number;
 }
 

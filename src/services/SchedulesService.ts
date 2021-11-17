@@ -12,7 +12,7 @@ import { api } from './api';
 
 export async function getSchedulesByUser(): Promise<IGetSchedulesByUserDTO[]> {
   try {
-    const response = await api.get('schedules_byuser?user_id=1');
+    const response = await api.get('/rentals');
 
     const schedulesByUser: IGetSchedulesByUserDTO[] = response.data;
 

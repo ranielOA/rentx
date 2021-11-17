@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FlatList, StatusBar } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { BackButton } from '../../components/BackButton';
 import { IGetSchedulesByUserDTO } from '../../dtos/SchedulesDTO';
 
@@ -25,11 +25,13 @@ import { useTheme } from 'styled-components';
 import { Car } from '../../components/Car';
 import { LoadAnimation } from '../../components/LoadAnimation';
 import { getSchedulesByUser } from '../../services/SchedulesService';
+import { format, parseISO } from 'date-fns';
 
 export function MyCars() {
   const [cars, setCars] = useState<IGetSchedulesByUserDTO[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const isScreenOnFocus = useIsFocused();
   const { goBack } = useNavigation();
   const theme = useTheme();
 
@@ -38,7 +40,16 @@ export function MyCars() {
       try {
         const schedulesByUser = await getSchedulesByUser();
 
-        setCars(schedulesByUser);
+        const dataFormatted = schedulesByUser.map((data: IGetSchedulesByUserDTO) => {
+          return {
+            id: data.id,
+            car: data.car,
+            start_date: format(parseISO(data.start_date), 'dd/MM/yyyy'),
+            end_date: format(parseISO(data.end_date), 'dd/MM/yyyy'),
+          };
+        });
+
+        setCars(dataFormatted);
       } catch (error) {
       } finally {
         setLoading(false);
@@ -46,7 +57,7 @@ export function MyCars() {
     }
 
     fetchCars();
-  }, []);
+  }, [isScreenOnFocus]);
 
   function handleBack() {
     goBack();
@@ -55,11 +66,7 @@ export function MyCars() {
   return (
     <Container>
       <Header>
-        <StatusBar
-          barStyle="light-content"
-          translucent
-          backgroundColor="transparent"
-        />
+        <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
         <BackButton onPress={handleBack} color={theme.colors.shape} />
 
         <Title>
@@ -91,14 +98,14 @@ export function MyCars() {
                 <CarFooter>
                   <CarFooterTitle>Período</CarFooterTitle>
                   <CarFooterPeriod>
-                    <CarFooterDate>{item.startDate}</CarFooterDate>
+                    <CarFooterDate>{item.start_date}</CarFooterDate>
                     <AntDesign
                       name="arrowright"
                       size={20}
                       color={theme.colors.title}
                       style={{ marginHorizontal: 10 }}
                     />
-                    <CarFooterDate>{item.endDate}</CarFooterDate>
+                    <CarFooterDate>{item.end_date}</CarFooterDate>
                   </CarFooterPeriod>
                 </CarFooter>
               </CarWrapper>

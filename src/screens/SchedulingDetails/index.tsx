@@ -95,35 +95,6 @@ export function SchedulingDetails() {
       });
   }
 
-  // async function handleConfirmRental() {
-  //   setLoading(true);
-
-  //   // const schedulesByCar = await getSchedulesByCar(car.id!);
-
-  //   await addScheduleByUser(
-  //     1,
-  //     car.id!,
-  //     new Date(dates[0]),
-  //     new Date(dates[dates.length - 1]),
-  //     rentTotal
-  //   );
-
-  //   // const unavailable_dates = [...schedulesByCar.unavailable_dates, ...dates];
-
-  //   addScheduleByCar(car.id!, unavailable_dates, dates[0], dates[dates.length - 1])
-  //     .then(() =>
-  //       navigate('Confirmation', {
-  //         nextScreenRoute: 'Home',
-  //         title: 'Carro alugado!',
-  //         message: `Agora você só precisa ir\naté a concessionária RENTX\npegar o seu automóvel`,
-  //       })
-  //     )
-  //     .catch(() => {
-  //       setLoading(false);
-  //       Alert.alert('Não foi possível confirmar o agendamento');
-  //     });
-  // }
-
   function handleBack() {
     goBack();
   }

@@ -82,10 +82,11 @@ function AuthProvider({ children }: AuthProviderProps) {
         if (users.length > 0) {
           api.defaults.headers.authorization = `Bearer ${users[0].token}`;
           setData(users[0]);
-          setLoading(false);
         }
       } catch (error) {
         throw error;
+      } finally {
+        setLoading(false);
       }
     }
 
